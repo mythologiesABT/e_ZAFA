@@ -59,6 +59,7 @@
 
         /* --- CARTE SVG RÉGIONS FRANCE --- */
         .map-wrapper {
+            position: relative;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 10px;
@@ -91,6 +92,23 @@
             margin-top: 10px;
             font-weight: 600;
             color: var(--secondary-color);
+        }
+
+        .map-tooltip {
+            position: absolute;
+            display: none;
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transform: translate(-50%, -120%);
+            transition: opacity 0.15s ease-out;
         }
 
         /* --- CALENDRIER DYNAMIQUE --- */
@@ -200,34 +218,9 @@
                 grid-template-columns: 1fr;
             }
         }
-
-    .map-wrapper {
-        position: relative;
-    }
-
-
-    .map-tooltip {
-        position: absolute;
-        display: none;
-        background-color: var(--secondary-color);
-        color: #ffffff;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        pointer-events: none; /* Empêche la bulle d'interférer avec le survol */
-        white-space: nowrap;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        z-index: 100;
-        transform: translate(-50%, -120%);
-        transition: opacity 0.15s ease-out;
-    }
     </style>
-
 </head>
 <body>
-
-
 
     <main class="booking-container">
         <a href="../index.html#catalogue" style="display:inline-block; margin-bottom: 20px; color: var(--gray-color); text-decoration: none;">
@@ -238,7 +231,7 @@
             <h1 style="text-align: center; color: var(--secondary-color); margin-bottom: 0.5rem;">Réservez votre essai privé</h1>
             <p style="text-align: center; color: var(--gray-color); margin-bottom: 2.5rem;">Choisissez le centre e_ZAFA le plus proche et sélectionnez la date de votre rendez-vous.</p>
 
-            <form id="bookingForm" onsubmit="event.preventDefault(); alert('Réservation enregistrée avec succès !');">
+            <form id="bookingForm" action="https://formspree.io/f/e.zafa.qse@gmail.com" method="POST">
 
                 <!-- ÉTAPE 1 ET 2 : CARTE ET CALENDRIER -->
                 <div class="grid-two-cols">
@@ -277,7 +270,7 @@
                                 <path class="region-path" data-region="Provence-Alpes-Côte d'Azur" d="M400,420 L480,390 L490,480 L350,510 Z" />
                             </svg>
                             <div class="selected-region-text" id="regionOutput">Cliquez sur une région sur la carte</div>
-                            <input type="hidden" id="selectedRegionInput" required>
+                            <input type="hidden" name="Région" id="selectedRegionInput" required>
                         </div>
                     </div>
 
@@ -290,188 +283,4 @@
                             <div class="calendar-header">
                                 <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
                                 <span id="calendarMonthYear" style="font-weight: 600;"></span>
-                                <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
-                            </div>
-                            <div class="calendar-days-header">
-                                <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
-                            </div>
-                            <div class="calendar-grid" id="calendarGrid"></div>
-                            <input type="hidden" id="selectedDateInput" required>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ÉTAPE 3 : INFORMATIONS PERSONNELLES -->
-                <div class="step-title">
-                    <span>3</span> Vos coordonnées & véhicule
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="carModel">Modèle souhaité</label>
-                        <select id="carModel" required>
-                            <option value="">-- Choisir un modèle --</option>
-                            <option value="e-BMW">e-BMW</option>
-                            <option value="e-Porsche">e-Porsche</option>
-                            <option value="e-Mercedes">e-Mercedes</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="timeSlot">Créneau horaire</label>
-                        <select id="timeSlot" required>
-                            <option value="">-- Choisir un horaire --</option>
-                            <option value="09:00">09:00 - 10:00</option>
-                            <option value="11:00">11:00 - 12:00</option>
-                            <option value="14:00">14:00 - 15:00</option>
-                            <option value="16:00">16:00 - 17:00</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="fullName">Nom complet</label>
-                        <input type="text" id="fullName" placeholder="Ex: Jean Dupont" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Adresse E-mail</label>
-                        <input type="email" id="email" placeholder="Ex: jean.dupont@email.com" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Numéro de téléphone</label>
-                    <input type="tel" id="phone" placeholder="Ex: 06 12 34 56 78" required>
-                </div>
-
-                <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; margin-top: 1rem;">
-                    Confirmer la réservation
-                </button>
-            </form>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-bottom">
-            <p>&copy; 2026 e_ZAFA. Tous droits réservés.</p>
-        </div>
-    </footer>
-
-    <!-- SCRIPT CARTE & CALENDRIER -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- GESTION DE LA CARTE ---
-            // --- GESTION DE LA CARTE ---
-const regionPaths = document.querySelectorAll('.region-path');
-const regionOutput = document.getElementById('regionOutput');
-const selectedRegionInput = document.getElementById('selectedRegionInput');
-const mapTooltip = document.getElementById('mapTooltip');
-const mapWrapper = document.querySelector('.map-wrapper');
-
-regionPaths.forEach(path => {
-    // 1. Au survol : affiche la bulle avec le nom de la région
-    path.addEventListener('mouseenter', (e) => {
-        const regionName = path.getAttribute('data-region');
-        mapTooltip.textContent = regionName;
-        mapTooltip.style.display = 'block';
-    });
-
-    // 2. Déplacement de la souris : fait suivre la bulle au curseur
-    path.addEventListener('mousemove', (e) => {
-        const wrapperRect = mapWrapper.getBoundingClientRect();
-        const x = e.clientX - wrapperRect.left;
-        const y = e.clientY - wrapperRect.top;
-
-        mapTooltip.style.left = `${x}px`;
-        mapTooltip.style.top = `${y}px`;
-    });
-
-    // 3. Quand la souris quitte la région : masque la bulle
-    path.addEventListener('mouseleave', () => {
-        mapTooltip.style.display = 'none';
-    });
-
-    // 4. Au clic : sélectionne la région
-    path.addEventListener('click', () => {
-        regionPaths.forEach(p => p.classList.remove('selected'));
-        path.classList.add('selected');
-        const regionName = path.getAttribute('data-region');
-        regionOutput.textContent = 'Région sélectionnée : ' + regionName;
-        selectedRegionInput.value = regionName;
-    });
-});
-
-            // --- GESTION DU CALENDRIER ---
-            const calendarMonthYear = document.getElementById('calendarMonthYear');
-            const calendarGrid = document.getElementById('calendarGrid');
-            const prevMonthBtn = document.getElementById('prevMonth');
-            const nextMonthBtn = document.getElementById('nextMonth');
-            const selectedDateInput = document.getElementById('selectedDateInput');
-
-            let currentDate = new Date();
-            let selectedDateCell = null;
-
-            const months = [
-                "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-                "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-            ];
-
-            function renderCalendar() {
-                const year = currentDate.getFullYear();
-                const month = currentDate.getMonth();
-
-                calendarMonthYear.textContent = `${months[month]} ${year}`;
-                calendarGrid.innerHTML = '';
-
-                const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; // Lundi = 0
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                const today = new Date();
-
-                // Cases vides du mois précédent
-                for (let i = 0; i < firstDayIndex; i++) {
-                    const emptyCell = document.createElement('div');
-                    emptyCell.classList.add('day-cell', 'disabled');
-                    calendarGrid.appendChild(emptyCell);
-                }
-
-                // Jours du mois courant
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dayCell = document.createElement('div');
-                    dayCell.classList.add('day-cell');
-                    dayCell.textContent = day;
-
-                    const thisDate = new Date(year, month, day);
-                    if (thisDate < today.setHours(0,0,0,0) || thisDate.getDay() === 0) { // Désactiver passés et Dimanches
-                        dayCell.classList.add('disabled');
-                    } else {
-                        dayCell.addEventListener('click', () => {
-                            if (selectedDateCell) selectedDateCell.classList.remove('selected');
-                            dayCell.classList.add('selected');
-                            selectedDateCell = dayCell;
-                            const formattedDate = `${day < 10 ? '0' + day : day}/${month + 1 < 10 ? '0' + (month + 1) : month + 1}/${year}`;
-                            selectedDateInput.value = formattedDate;
-                        });
-                    }
-
-                    calendarGrid.appendChild(dayCell);
-                }
-            }
-
-            prevMonthBtn.addEventListener('click', () => {
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                renderCalendar();
-            });
-
-            nextMonthBtn.addEventListener('click', () => {
-                currentDate.setMonth(currentDate.getMonth() + 1);
-                renderCalendar();
-            });
-
-            renderCalendar();
-        });
-    </script>
-</body>
-</html>
+                                <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i>
