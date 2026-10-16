@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Avis Nous Intéresse - e_ZAFA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../deco.css">
+    <link rel="icon" href="../img/logo.png">
+    <style>
+        .survey-container {
+            max-width: 800px;
+            margin: 2rem auto 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .survey-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--card-shadow, 0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .survey-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .survey-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            color: var(--secondary-color, #1e293b);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* --- SYSTÈME DE NOTATION PAR ÉTOILES --- */
+        .rating-group {
+            display: flex;
+            gap: 10px;
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        .rating-group i {
+            transition: color 0.2s;
+        }
+
+        .rating-group i:hover,
+        .rating-group i.active {
+            color: #f59e0b; /* Couleur dorée pour les étoiles */
+        }
+
+        /* --- BOUTONS RADIO / CHOIX MULTIPLES --- */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .option-label input {
+            accent-color: var(--primary-color, #2563eb);
+        }
+
+        /* --- CHAMPS DE TEXTE --- */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--secondary-color, #1e293b);
+        }
+
+        .form-group textarea, .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group textarea:focus, .form-group input:focus {
+            border-color: var(--primary-color, #2563eb);
+        }
+
+        .submit-btn {
+            background: var(--primary-color, #2563eb);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="survey-container">
+        <a href="../index.html" style="display:inline-block; margin-bottom: 20px; color: #64748b; text-decoration: none;">
+            <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
+        </a>
+
+        <div class="survey-card">
+            <h1 style="text-align: center; color: var(--secondary-color, #1e293b); margin-bottom: 0.5rem;">Votre avis compte</h1>
+            <p style="text-align: center; color: #64748b; margin-bottom: 2.5rem;">Aidez-nous à améliorer l'expérience e_ZAFA en répondant à ce court questionnaire (2 minutes).</p>
+
+            <!-- Remplacez l'URL d'action par votre propre identifiant Formspree si besoin -->
+            <form id="surveyForm" action="https://formspree.io/f/e.zafa.qse@gmail.com" method="POST">
+
+                <!-- Question 1 : Note Globale -->
+                <div class="survey-section">
+                    <div class="question-title">1. Comment évaluez-vous votre expérience globale avec e_ZAFA ?</div>
+                    <div class="rating-group" id="starRating">
+                        <i class="fa-solid fa-star" data-value="1"></i>
+                        <i class="fa-solid fa-star" data-value="2"></i>
+                        <i class="fa-solid fa-star" data-value="3"></i>
+                        <i class="fa-solid fa-star" data-value="4"></i>
+                        <i class="fa-solid fa-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" name="Note_Globale" id="ratingInput" value="5" required>
+                </div>
+
+                <!-- Question 2 : Utilisation / Choix -->
+                <div class="survey-section">
+                    <div class="question-title">2. Comment avez-vous découvert nos services ?</div>
+                    <div class="options-grid">
+                        <label class="option-label"><input type="radio" name="Origine" value="Réseaux sociaux" required> Réseaux sociaux</label>
+                        <label class="option-label"><input type="radio" name="Origine" value="Bouche à oreille"> Bouche à oreille</label>
+                        <label class="option-label"><input type="radio" name="Origine" value="Recherche web"> Recherche web</label>
+                        <label class="option-label"><input type="radio" name="Origine" value="Autre"> Autre</label>
+                    </div>
+                </div>
+
+                <!-- Question 3 : Recommandation -->
+                <div class="survey-section">
+                    <div class="question-title">3. Recommanderiez-vous e_ZAFA à un proche ?</div>
+                    <div class="options-grid">
+                        <label class="option-label"><input type="radio" name="Recommandation" value="Oui, certain" required> Oui, tout à fait</label>
+                        <label class="option-label"><input type="radio" name="Recommandation" value="Peut-être"> Peut-être</label>
+                        <label class="option-label"><input type="radio" name="Recommandation" value="Non"> Non</label>
+                    </div>
+                </div>
+
+                <!-- Question 4 : Commentaires libres -->
+                <div class="survey-section">
+                    <div class="question-title">4. Avez-vous des suggestions d'amélioration ou des remarques ?</div>
+                    <div class="form-group">
+                        <textarea name="Commentaires" rows="4" placeholder="Ex: J'aimerais voir plus de choix de..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Optionnel : Contact -->
+                <div class="survey-section" style="border-bottom: none;">
+                    <div class="question-title">5. Vos coordonnées (Optionnel, si vous souhaitez un retour)</div>
+                    <div class="form-group">
+                        <label for="email">Adresse Email</label>
+                        <input type="email" id="email" name="Email" placeholder="votre@email.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Envoyer mon avis</button>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- SCRIPT DE GESTION DES ÉTOILES -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('#starRating i');
+            const ratingInput = document.getElementById('ratingInput');
+
+            // Sélectionner par défaut toutes les étoiles (5/5) au chargement
+            highlightStars(5);
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+                    ratingInput.value = value;
+                    highlightStars(value);
+                });
+            });
+
+            function highlightStars(count) {
+                stars.forEach(s => {
+                    if (s.getAttribute('data-value') <= count) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
