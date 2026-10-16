@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +19,12 @@
             background: #ffffff;
             border-radius: 12px;
             padding: 2.5rem;
-            box-shadow: var(--card-shadow);
+            box-shadow: var(--card-shadow, 0 4px 6px rgba(0,0,0,0.1));
         }
 
         .step-title {
             font-size: 1.3rem;
-            color: var(--secondary-color);
+            color: var(--secondary-color, #1e293b);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -32,7 +32,7 @@
         }
 
         .step-title span {
-            background: var(--primary-color);
+            background: var(--primary-color, #2563eb);
             color: white;
             width: 30px;
             height: 30px;
@@ -85,19 +85,19 @@
         }
 
         .region-path.selected {
-            fill: var(--primary-color) !important;
+            fill: var(--primary-color, #2563eb) !important;
         }
 
         .selected-region-text {
             margin-top: 10px;
             font-weight: 600;
-            color: var(--secondary-color);
+            color: var(--secondary-color, #1e293b);
         }
 
         .map-tooltip {
             position: absolute;
             display: none;
-            background-color: var(--secondary-color);
+            background-color: var(--secondary-color, #1e293b);
             color: #ffffff;
             padding: 6px 12px;
             border-radius: 6px;
@@ -131,7 +131,7 @@
             border: none;
             font-size: 1.1rem;
             cursor: pointer;
-            color: var(--secondary-color);
+            color: var(--secondary-color, #1e293b);
             padding: 5px 10px;
         }
 
@@ -141,7 +141,7 @@
             text-align: center;
             font-weight: 600;
             font-size: 0.85rem;
-            color: var(--gray-color);
+            color: #64748b;
             margin-bottom: 8px;
         }
 
@@ -175,10 +175,10 @@
         }
 
         .day-cell.selected {
-            background: var(--secondary-color);
+            background: var(--secondary-color, #1e293b);
             color: white;
             font-weight: bold;
-            border-color: var(--secondary-color);
+            border-color: var(--secondary-color, #1e293b);
         }
 
         /* --- FORMULAIRE --- */
@@ -204,13 +204,30 @@
         }
 
         .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary-color);
+            border-color: var(--primary-color, #2563eb);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+        }
+
+        .submit-btn {
+            background: var(--primary-color, #2563eb);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
         }
 
         @media (max-width: 600px) {
@@ -223,13 +240,13 @@
 <body>
 
     <main class="booking-container">
-        <a href="../index.html#catalogue" style="display:inline-block; margin-bottom: 20px; color: var(--gray-color); text-decoration: none;">
+        <a href="../index.html#catalogue" style="display:inline-block; margin-bottom: 20px; color: #64748b; text-decoration: none;">
             <i class="fa-solid fa-arrow-left"></i> Retour au catalogue
         </a>
 
         <div class="booking-card">
-            <h1 style="text-align: center; color: var(--secondary-color); margin-bottom: 0.5rem;">Réservez votre essai privé</h1>
-            <p style="text-align: center; color: var(--gray-color); margin-bottom: 2.5rem;">Choisissez le centre e_ZAFA le plus proche et sélectionnez la date de votre rendez-vous.</p>
+            <h1 style="text-align: center; color: var(--secondary-color, #1e293b); margin-bottom: 0.5rem;">Réservez votre essai privé</h1>
+            <p style="text-align: center; color: #64748b; margin-bottom: 2.5rem;">Choisissez le centre e_ZAFA le plus proche et sélectionnez la date de votre rendez-vous.</p>
 
             <form id="bookingForm" action="https://formspree.io/f/e.zafa.qse@gmail.com" method="POST">
 
@@ -244,29 +261,17 @@
                         <div class="map-wrapper">
                             <div id="mapTooltip" class="map-tooltip"></div>
                             <svg class="france-map" viewBox="0 0 600 550" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Île-de-France -->
                                 <path class="region-path" data-region="Île-de-France" d="M300,180 L330,170 L340,200 L310,210 Z" />
-                                <!-- Hauts-de-France -->
                                 <path class="region-path" data-region="Hauts-de-France" d="M280,70 L350,60 L360,150 L300,180 L270,120 Z" />
-                                <!-- Grand Est -->
                                 <path class="region-path" data-region="Grand Est" d="M350,60 L480,90 L490,210 L340,200 L360,150 Z" />
-                                <!-- Normandie -->
                                 <path class="region-path" data-region="Normandie" d="M180,110 L280,70 L300,180 L210,170 Z" />
-                                <!-- Bretagne -->
                                 <path class="region-path" data-region="Bretagne" d="M80,150 L180,110 L210,170 L110,200 Z" />
-                                <!-- Pays de la Loire -->
                                 <path class="region-path" data-region="Pays de la Loire" d="M110,200 L210,170 L230,260 L140,270 Z" />
-                                <!-- Centre-Val de Loire -->
                                 <path class="region-path" data-region="Centre-Val de Loire" d="M210,170 L340,200 L310,300 L230,260 Z" />
-                                <!-- Bourgogne-Franche-Comté -->
                                 <path class="region-path" data-region="Bourgogne-Franche-Comté" d="M340,200 L490,210 L450,330 L310,300 Z" />
-                                <!-- Nouvelle-Aquitaine -->
                                 <path class="region-path" data-region="Nouvelle-Aquitaine" d="M140,270 L310,300 L280,480 L160,450 Z" />
-                                <!-- Auvergne-Rhône-Alpes -->
                                 <path class="region-path" data-region="Auvergne-Rhône-Alpes" d="M310,300 L450,330 L430,440 L300,410 Z" />
-                                <!-- Occitanie -->
                                 <path class="region-path" data-region="Occitanie" d="M280,480 L300,410 L400,420 L350,510 Z" />
-                                <!-- PACA -->
                                 <path class="region-path" data-region="Provence-Alpes-Côte d'Azur" d="M400,420 L480,390 L490,480 L350,510 Z" />
                             </svg>
                             <div class="selected-region-text" id="regionOutput">Cliquez sur une région sur la carte</div>
@@ -283,4 +288,50 @@
                             <div class="calendar-header">
                                 <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
                                 <span id="calendarMonthYear" style="font-weight: 600;"></span>
-                                <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i>
+                                <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-days-header">
+                                <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+                            </div>
+                            <div class="calendar-grid" id="calendarDays"></div>
+                            <input type="hidden" name="Date" id="selectedDateInput" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ÉTAPE 3 : INFORMATIONS PERSONNELLES -->
+                <div class="step-title">
+                    <span>3</span> Vos coordonnées
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" id="firstName" name="Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" id="lastName" name="Nom" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Adresse Email</label>
+                        <input type="email" id="email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="Téléphone" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" style="margin-top: 1rem;">Confirmer la réservation</button>
+
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>
